@@ -13,6 +13,7 @@
     </head>
     <body>
         <h1>Användare</h1>
+<<<<<<< HEAD
         @if($me->admin || (isset($user) && $me->id ==$user->id ))
             <form method="post">
                 @if(isset($user))
@@ -42,17 +43,49 @@
                 @endif
             </form>
         @endif
+=======
+        <form method="post">
+            @if(isset($user))
+                <input type="hidden" name="id" value="{{$user->id}}">
+            @endif
+            <label>Namn:
+                <input name="namn" required placeholder="Ange namn" value="{{$user->namn ?? ''}}">
+            </label>
+            <label>Epost:
+                <input type="email" name="epost" required placeholder="Ange epost" value="{{$user->epost ?? ''}}">
+            </label>
+            <label>Lösenord:
+                <input type="password" name="losenord" placeholder="Ange lösenord">
+            </label>
+            @if(isset($user))
+                <label>
+                    <input type="hidden" name="admin" value="0">
+                    <input type="checkbox" name="admin" value="1"
+                        {{$user->admin ? 'checked' : ''}}> Administratör
+                </label>
+            @endif
+            <input type="submit" value="Spara">
+            <input type="reset" value="Ångra">
+            @if(isset($user))
+                <input type="submit" name="delete" value="Ta bort">
+            @endif
+        </form>
+>>>>>>> parent of 0f20c85 (Sett till att endast admin kan ändra andra användare)
         @if (!empty($lista))
             <h2>Användarlista</h2>
             <ul>
                 @foreach($lista as $u)
                     <li>
                         {{$u->id}}.
+<<<<<<< HEAD
                         @if($me->admin || $me->id==$u->id )
                             <a href="/anvandare/{{$u->id}}">{{$u->namn}}</a>
                         @else
                             {{$u->namn}}
                         @endif
+=======
+                        <a href="/anvandare/{{$u->id}}">{{$u->namn}}</a>
+>>>>>>> parent of 0f20c85 (Sett till att endast admin kan ändra andra användare)
                         {{$u->epost}}
                     </li>
                 @endforeach

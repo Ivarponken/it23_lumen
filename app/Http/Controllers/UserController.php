@@ -10,19 +10,27 @@ use Illuminate\Support\Facades\View;
 
 class UserController extends Controller {
 
-    public function __construct(private UserRepo $repo) {}
+    public function __construct(private UserRepo $repo) {
 
+<<<<<<< HEAD
     function show(Request $request) {
         $lista = $this->repo->all();
         // Hämta inloggad användare
         $me = $request->user();
         return View::make('user', ['lista' => $lista, 'me' => $me]);
+=======
+    }
+    function show() {
+        $lista=$this->repo->all();
+        return View::make('user', ['lista'=>$lista]);
+>>>>>>> parent of 0f20c85 (Sett till att endast admin kan ändra andra användare)
     }
 
     public function showUser(Request $request) {
-        $id = $request->route('id');
-        $user = $this->repo->get($id);
+        $id=$request->route('id');
+        $user=$this->repo->get($id);
 
+<<<<<<< HEAD
         // Hämta inloggad användare
         $me = $request->user();
         if ($me->admin || isset($user) && $me->id == $user->id) {
@@ -42,11 +50,19 @@ class UserController extends Controller {
         }
 
         $user = User::factory()->make($request->request->all());
+=======
+        return View::make('user' ,['user'=>$user]);
+    }
+
+    function add(Request $request) {
+        $user=User::factory()->make($request->request->all());
+>>>>>>> parent of 0f20c85 (Sett till att endast admin kan ändra andra användare)
         $this->repo->add($user);
         return redirect('/anvandare');
     }
 
     public function modifyUser(Request $request) {
+<<<<<<< HEAD
         // Hämta inloggad användare
         $me = $request->user();
 
@@ -64,10 +80,13 @@ class UserController extends Controller {
 
         // Allt ok - utför radering eller uppdatering
         if ($request->request->has('delete')) {
+=======
+        $id=$request->route('id');
+        if($request->request->get('delete')) {
+>>>>>>> parent of 0f20c85 (Sett till att endast admin kan ändra andra användare)
             $this->repo->delete($id);
-        }
-        else {
-            $user = $this->repo->get($id);
+        } else {
+            $user=$this->repo->get($id);
             $user->fill($request->request->all());
             if (!$me->admin) {
                 $user->admin = 0;
